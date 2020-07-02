@@ -3,10 +3,12 @@ package com.example.notesapp;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,13 +24,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.EventListener;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     //database variables intialization
     DatabaseReference notesdata;
     notes Notes;
     long maxId;
+    List<notes> notesList = new ArrayList<>();
+    adapterNotes allDataAdapter;
 
     //view variable initialization
     Toolbar toolbar;
@@ -44,6 +50,42 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         recyclerView=findViewById(R.id.listOfNotes);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        notesdata = FirebaseDatabase.getInstance().getReference().child("Notes");
+
+
+
+        notesdata.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                notesList.clear();
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    notes note = dataSnapshot1.getValue(notes.class);
+
+                    notesList.add(note);
+
+
+                    Log.d("showmedata",String.valueOf(note.getTitle()));
+                }
+
+                allDataAdapter = new adapterNotes(MainActivity.this, notesList);
+                recyclerView.setAdapter(allDataAdapter);
+                allDataAdapter.notifyDataSetChanged();
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
+
+
+
+
+
 
 
     }
@@ -63,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
         if(item.getItemId() == R.id.add){
             Intent i = new Intent(this, addNote.class);
             startActivity(i);
+
             Toast.makeText(this,"Add button is clicked",Toast.LENGTH_LONG).show();
         }
 
