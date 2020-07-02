@@ -46,33 +46,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView=findViewById(R.id.listOfNotes);
 
 
-
-
-
-        notesdata = FirebaseDatabase.getInstance().getReference().child("Notes");
-        Notes = new notes("001","maths","just a trial","2/07/20","11:46 am");
-        notesdata.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-
-                                maxId = (dataSnapshot.getChildrenCount());
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
-
-                                         notesdata.child(String.valueOf(maxId+1)).setValue(Notes);
-
-
-
     }
 
         @Override
