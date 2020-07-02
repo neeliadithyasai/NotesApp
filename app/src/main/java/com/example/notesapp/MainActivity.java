@@ -5,7 +5,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -43,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
         notesdata = FirebaseDatabase.getInstance().getReference().child("Notes");
         Notes = new notes("001","maths","just a trial","2/07/20","11:46 am");
         notesdata.addValueEventListener(new ValueEventListener() {
@@ -67,5 +73,26 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+
+        @Override
+          public boolean onCreateOptionsMenu(Menu menu){
+
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.add_menu,menu);
+            return true;
+
+
+            }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.add){
+            Intent i = new Intent(this, addNote.class);
+            startActivity(i);
+            Toast.makeText(this,"Add button is clicked",Toast.LENGTH_LONG).show();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

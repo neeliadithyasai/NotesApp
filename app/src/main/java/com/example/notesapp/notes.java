@@ -2,58 +2,68 @@ package com.example.notesapp;
 
 public class notes {
 
-    private String KEY_id;
-    private String KEY_title;
-    private String KEY_content;
-    private String KEY_date;
-    private String KEY_time;
+    private String id;
+    private String title;
+    private String content;
+    private String date;
+    private String time;
 
-    public notes(String KEY_id, String KEY_title, String KEY_content, String KEY_date, String KEY_time) {
-        this.KEY_id = KEY_id;
-        this.KEY_title = KEY_title;
-        this.KEY_content = KEY_content;
-        this.KEY_date = KEY_date;
-        this.KEY_time = KEY_time;
+
+    public notes(String id, String title, String content, String date, String time) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.date = date;
+        this.time = time;
     }
 
-
-    public String getKEY_id() {
-        return KEY_id;
+    public notes() {
     }
 
-    public void setKEY_id(String KEY_id) {
-        this.KEY_id = KEY_id;
+    public notes(String title, String content, String date, String time) {
+        this.title = title;
+        this.content = content;
+        this.date = date;
+        this.time = time;
     }
 
-    public String getKEY_title() {
-        return KEY_title;
+    public String getId() {
+        return id;
     }
 
-    public void setKEY_title(String KEY_title) {
-        this.KEY_title = KEY_title;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getKEY_content() {
-        return KEY_content;
+    public String getTitle() {
+        return title;
     }
 
-    public void setKEY_content(String KEY_content) {
-        this.KEY_content = KEY_content;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getKEY_date() {
-        return KEY_date;
+    public String getContent() {
+        return content;
     }
 
-    public void setKEY_date(String KEY_date) {
-        this.KEY_date = KEY_date;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public String getKEY_time() {
-        return KEY_time;
+    public String getDate() {
+        return date;
     }
 
-    public void setKEY_time(String KEY_time) {
-        this.KEY_time = KEY_time;
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

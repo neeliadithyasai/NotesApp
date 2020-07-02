@@ -9,14 +9,15 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="?actionBarSize"
         android:layout_marginBottom="1dp"
         android:background="@android:color/holo_blue_light"
+        app:layout_constraintBottom_toTopOf="@+id/listOfNotes"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/noteTitle"
         android:layout_width="384dp"
         android:layout_height="56dp"
         android:layout_marginStart="10dp"
@@ -25,18 +26,20 @@
         android:hint="Enter title"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/noteDetails"
         android:layout_width="384dp"
         android:layout_height="362dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
+        android:background="@null"
         android:ems="10"
         android:gravity="start|top"
+        android:hint="Enter notes here"
         android:inputType="textMultiLine"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/noteTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
