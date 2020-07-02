@@ -53,6 +53,22 @@ public class addNote extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
+        notesdata = FirebaseDatabase.getInstance().getReference().child("Notes");
+        notesdata.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+
+                    maxId = (dataSnapshot.getChildrenCount());
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
 
 
@@ -114,30 +130,15 @@ public class addNote extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.delete){
-            Toast.makeText(this,"delete button is clicked",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"note not saved",Toast.LENGTH_LONG).show();
+            onBackPressed();
         }
         if(item.getItemId() == R.id.save){
-        notesdata = FirebaseDatabase.getInstance().getReference().child("Notes");
-        notesdata.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-
-                    maxId = (dataSnapshot.getChildrenCount());
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
             Notes = new notes(String.valueOf(maxId+1),notesTitle.getText().toString(),noteDetails.getText().toString(),todaysDate,currentTime);
             notesdata.child(String.valueOf(maxId+1)).setValue(Notes);
             Toast.makeText(this,"save button is clicked",Toast.LENGTH_LONG).show();
-            onBackPressed();
+          onBackPressed();
         }
 
         return super.onOptionsItemSelected(item);
