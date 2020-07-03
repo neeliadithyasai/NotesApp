@@ -23,7 +23,7 @@
         android:layout_height="640dp"
 
 
-        android:background="#E9EBF8"
+        android:background="#0B3954"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

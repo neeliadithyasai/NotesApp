@@ -10,7 +10,7 @@
     android:layout_marginEnd="10dp"
     android:layout_marginRight="10dp"
     android:layout_marginBottom="10dp"
-    android:background="#8D818C"
+    android:background="@drawable/radius"
     android:orientation="vertical"
     android:padding="10dp">
 
