@@ -61,11 +61,8 @@ public class MainActivity extends AppCompatActivity {
                 notesList.clear();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     notes note = dataSnapshot1.getValue(notes.class);
-
                     notesList.add(note);
-
-
-                    Log.d("showmedata",String.valueOf(note.getTitle()));
+                     Log.d("showmedata",String.valueOf(note.getTitle()));
                 }
 
                 allDataAdapter = new adapterNotes(MainActivity.this, notesList);
