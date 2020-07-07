@@ -23,7 +23,7 @@
         android:layout_marginStart="13dp"
         android:background="#00EFE7DA"
         android:padding="10dp"
-        app:srcCompat="@android:drawable/ic_menu_edit" />
+        app:srcCompat="@android:drawable/ic_menu_agenda" />
 
     <TextView
         android:id="@+id/subjectTitle"
@@ -35,25 +35,5 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/ndate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/subjectTitle"
-        android:layout_margin="5dp"
-        android:layout_toRightOf="@+id/imgEmp"
-        android:text="date"
-        android:textSize="18sp"
-        android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/ntime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ndate"
-        android:layout_margin="5dp"
-        android:layout_toRightOf="@+id/imgEmp"
-        android:text="time"
-        android:textSize="18sp"
-        android:textStyle="bold" />
 </RelativeLayout>

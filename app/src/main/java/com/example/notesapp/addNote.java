@@ -37,6 +37,7 @@ public class addNote extends AppCompatActivity {
     Calendar c;
     String todaysDate;
     String currentTime;
+    String id;
 
 
     @Override
@@ -52,8 +53,11 @@ public class addNote extends AppCompatActivity {
         getSupportActionBar().setTitle("New Note");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        Intent i = getIntent();
+        id = i.getExtras().getString("subname");
 
-        notesdata = FirebaseDatabase.getInstance().getReference().child("Notes");
+
+        notesdata = FirebaseDatabase.getInstance().getReference().child("Notes").child(id).child("subjectnotes");
         notesdata.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -135,8 +139,11 @@ public class addNote extends AppCompatActivity {
         }
         if(item.getItemId() == R.id.save){
 
-            Notes = new notes(String.valueOf(maxId+1),notesTitle.getText().toString(),noteDetails.getText().toString(),todaysDate,currentTime);
-            notesdata.child(String.valueOf(maxId+1)).setValue(Notes);
+
+            Notes = new notes(String.valueOf(maxId+1),notesTitle.getText().toString(),noteDetails.getText().toString(),todaysDate,currentTime,String.valueOf(id));
+            //notesdata.child("1").setValue(Notes);
+
+             notesdata.child(String.valueOf(maxId+1)).setValue(Notes);
             Toast.makeText(this,"save button is clicked",Toast.LENGTH_LONG).show();
           onBackPressed();
         }

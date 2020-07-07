@@ -2,19 +2,16 @@ package com.example.notesapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,13 +64,15 @@ public class adapterNotes extends RecyclerView.Adapter< adapterNotes.ViewHolder>
             super(itemView);
             time = itemView.findViewById(R.id.ntime);
             date = itemView.findViewById(R.id.ndate);
-            title = itemView.findViewById(R.id.ntitle);
+            title = itemView.findViewById(R.id.subjectTitle);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                 Intent i = new Intent(v.getContext(),notesDetails.class);
                 i.putExtra("id",String.valueOf(noteslist.get(getAdapterPosition()).getId()));
+                i.putExtra("sname",String.valueOf(noteslist.get(getAdapterPosition()).getSubjectname()));
                 v.getContext().startActivity(i);
 
                     Toast.makeText(v.getContext(),String.valueOf(noteslist.get(getAdapterPosition()).getId()), Toast.LENGTH_LONG).show();

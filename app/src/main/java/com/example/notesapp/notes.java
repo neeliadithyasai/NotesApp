@@ -7,14 +7,17 @@ public class notes {
     private String content;
     private String date;
     private String time;
+    private String subjectname;
 
 
-    public notes(String id, String title, String content, String date, String time) {
+
+    public notes(String id, String title, String content, String date, String time, String subjectname) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.date = date;
         this.time = time;
+        this.subjectname = subjectname;
     }
 
     public notes() {
@@ -65,5 +68,13 @@ public class notes {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getSubjectname() {
+        return subjectname;
+    }
+
+    public void setSubjectname(String subjectname) {
+        this.subjectname = subjectname;
     }
 }

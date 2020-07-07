@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     long maxId;
     List<notes> notesList = new ArrayList<>();
     adapterNotes allDataAdapter;
+    String id;
 
     //view variable initialization
     Toolbar toolbar;
@@ -51,7 +52,12 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         recyclerView=findViewById(R.id.listOfNotes);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        notesdata = FirebaseDatabase.getInstance().getReference().child("Notes");
+      //  notesdata = FirebaseDatabase.getInstance().getReference().child("Notes").child("science").child("subjectnotes");
+
+
+        Intent i = getIntent();
+      id = i.getExtras().getString("subname");
+        notesdata = FirebaseDatabase.getInstance().getReference().child("Notes").child(id).child("subjectnotes");
 
 
 
@@ -62,8 +68,10 @@ public class MainActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     notes note = dataSnapshot1.getValue(notes.class);
                     notesList.add(note);
-                     Log.d("showmedata",String.valueOf(note.getTitle()));
+
                 }
+//                Log.d("showmedata",String.valueOf(dataSnapshot.getValue(notes.class)));
+
 
                 allDataAdapter = new adapterNotes(MainActivity.this, notesList);
                 recyclerView.setAdapter(allDataAdapter);
@@ -101,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.add){
             Intent i = new Intent(this, addNote.class);
+            i.putExtra("subname",String.valueOf(id));
             startActivity(i);
 
             Toast.makeText(this,"Add button is clicked",Toast.LENGTH_LONG).show();
