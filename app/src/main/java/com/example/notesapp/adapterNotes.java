@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,16 +18,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class adapterNotes extends RecyclerView.Adapter< adapterNotes.ViewHolder> {
+public class adapterNotes extends RecyclerView.Adapter< adapterNotes.ViewHolder> implements Filterable {
 
     LayoutInflater inflater;
     List<notes> noteslist =new ArrayList<>();
+    List<notes> noteslistfull =new ArrayList<>();
 
 
 
     adapterNotes(Context context, List<notes> noteslist){
         this.inflater = LayoutInflater.from(context);
         this.noteslist = noteslist;
+        noteslistfull = new ArrayList<notes>(noteslist);
 
     }
 
@@ -55,6 +59,44 @@ public class adapterNotes extends RecyclerView.Adapter< adapterNotes.ViewHolder>
     public int getItemCount() {
         return noteslist.size() ;
     }
+
+    @Override
+    public Filter getFilter() {
+        return notesfilter;
+    }
+
+    private Filter notesfilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<notes> filteredList = new ArrayList<notes>( );
+            if(constraint == null || constraint.length() == 0){
+                filteredList.addAll(noteslistfull);
+            }else {
+                String filterpattern = constraint.toString().toLowerCase().trim();
+
+                for(notes item :noteslistfull){
+                    if(item.getTitle().toLowerCase().contains(filterpattern)){
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            noteslist.clear();
+            Log.d("searchresults", String.valueOf(results.values));
+
+            noteslist.addAll((List) results.values);
+            notifyDataSetChanged();
+
+
+        }
+    };
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView time,date,title;

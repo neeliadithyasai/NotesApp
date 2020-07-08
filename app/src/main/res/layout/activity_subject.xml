@@ -11,18 +11,13 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-
-        android:layout_marginBottom="1dp"
         android:background="#8D818C" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/subjectRecyclerView"
-        android:layout_width="408dp"
-        android:layout_height="607dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="1dp" />
+        android:layout_width="413dp"
+        android:layout_height="640dp"
+        android:background="#0B3954" />
 
 
 </LinearLayout>

@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
@@ -114,6 +115,28 @@ public class MainActivity extends AppCompatActivity {
 
             Toast.makeText(this,"Add button is clicked",Toast.LENGTH_LONG).show();
         }
+
+        if(item.getItemId() == R.id.search_notes){
+
+            SearchView searchView = (SearchView) item.getActionView();
+
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    allDataAdapter.getFilter().filter(newText);
+                    return false;
+                }
+            });
+
+
+        }
+
+
 
         return super.onOptionsItemSelected(item);
     }
