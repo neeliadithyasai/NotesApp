@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -96,6 +97,22 @@ public class subjectActivity extends AppCompatActivity {
 
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.add_subjecct,menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                allDataAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
         return true;
 
 
@@ -111,9 +128,9 @@ public class subjectActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Subject Title");
 
-// Set up the input
+            // Set up the input
             final EditText input = new EditText(this);
-// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
             input.setInputType(InputType.TYPE_CLASS_TEXT );
             builder.setView(input);
 
@@ -123,7 +140,7 @@ public class subjectActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
 
                     Subject  = new subject(input.getText().toString());
-                    subdata.child(input.getText().toString()).setValue(Subject);
+                    subdata.child(input.getText().toString()).setValue(Subject );
 
                 }
             });
@@ -136,6 +153,7 @@ public class subjectActivity extends AppCompatActivity {
 
             builder.show();
         }
+
 
         return super.onOptionsItemSelected(item);
     }

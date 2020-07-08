@@ -3,8 +3,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search"
+        android:title="Item"
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="android.widget.SearchView"/>
+    <item
         android:id="@+id/addSubject"
         android:icon="@android:drawable/ic_input_add"
         android:title="Item"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom"
+    />
 </menu>
