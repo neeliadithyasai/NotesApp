@@ -1,24 +1,21 @@
 package com.example.notesapp;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.firebase.FirebaseApp;
+import com.example.notesapp.adapters.adapterNotes;
+import com.example.notesapp.model.notes;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,7 +23,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -109,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.add){
-            Intent i = new Intent(this, addNote.class);
+            Intent i = new Intent(this, addNoteActivity.class);
             i.putExtra("subname",String.valueOf(id));
             startActivity(i);
 

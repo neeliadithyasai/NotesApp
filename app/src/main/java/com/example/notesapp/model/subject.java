@@ -1,9 +1,8 @@
-package com.example.notesapp;
+package com.example.notesapp.model;
+
+import com.example.notesapp.model.notes;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class subject {
 

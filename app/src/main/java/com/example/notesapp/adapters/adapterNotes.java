@@ -1,4 +1,4 @@
-package com.example.notesapp;
+package com.example.notesapp.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.notesapp.R;
+import com.example.notesapp.model.notes;
+import com.example.notesapp.notesDetailsActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +30,7 @@ public class adapterNotes extends RecyclerView.Adapter< adapterNotes.ViewHolder>
 
 
 
-    adapterNotes(Context context, List<notes> noteslist){
+    public adapterNotes(Context context, List<notes> noteslist){
         this.inflater = LayoutInflater.from(context);
         this.noteslist = noteslist;
         noteslistfull = new ArrayList<notes>(noteslist);
@@ -112,7 +116,7 @@ public class adapterNotes extends RecyclerView.Adapter< adapterNotes.ViewHolder>
                 @Override
                 public void onClick(View v) {
 
-                Intent i = new Intent(v.getContext(),notesDetails.class);
+                Intent i = new Intent(v.getContext(), notesDetailsActivity.class);
                 i.putExtra("id",String.valueOf(noteslist.get(getAdapterPosition()).getId()));
                 i.putExtra("sname",String.valueOf(noteslist.get(getAdapterPosition()).getSubjectname()));
                 v.getContext().startActivity(i);
