@@ -3,8 +3,12 @@ package com.example.notesapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,6 +20,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.notesapp.model.notes;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,6 +51,11 @@ public class addNoteActivity extends AppCompatActivity {
     String todaysDate;
     String currentTime;
     String id;
+    double noteslat;
+    double noteslong;
+
+    //initialization for location.
+    FusedLocationProviderClient client;
 
 
     @Override
@@ -52,6 +70,15 @@ public class addNoteActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("New Note");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        client = LocationServices.getFusedLocationProviderClient(this);
+
+        if(ActivityCompat.checkSelfPermission(addNoteActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED){
+
+            getcurrentLoaction();
+
+        }else{
+            ActivityCompat.requestPermissions(addNoteActivity.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},44);
+        }
 
         Intent i = getIntent();
         id = i.getExtras().getString("subname");
@@ -110,6 +137,38 @@ public class addNoteActivity extends AppCompatActivity {
         Log.d("calander", "Date and time"+todaysDate+" and "+currentTime);
     }
 
+    private void getcurrentLoaction() {
+        Task<Location> Task = client.getLastLocation();
+        Task.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(final Location location) {
+                if(location != null){
+
+
+                    noteslat = location.getLatitude();
+                    noteslong = location.getLongitude();
+
+                    Log.d("userlocation", String.valueOf(location.getLatitude()));
+
+
+
+
+
+                }
+            }
+        });
+
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode==44){
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                getcurrentLoaction();
+            }
+        }
+    }
+
     //pad for time
     private String pad(int i) {
 
@@ -140,12 +199,12 @@ public class addNoteActivity extends AppCompatActivity {
         if(item.getItemId() == R.id.save){
 
 
-            Notes = new notes(String.valueOf(maxId+1),notesTitle.getText().toString(),noteDetails.getText().toString(),todaysDate,currentTime,String.valueOf(id));
+            Notes = new notes(String.valueOf(maxId+1),notesTitle.getText().toString(),noteDetails.getText().toString(),todaysDate,currentTime,String.valueOf(id),noteslat,noteslong);
             //notesdata.child("1").setValue(Notes);
 
              notesdata.child(String.valueOf(maxId+1)).setValue(Notes);
             Toast.makeText(this,"save button is clicked",Toast.LENGTH_LONG).show();
-          onBackPressed();
+            onBackPressed();
         }
 
         return super.onOptionsItemSelected(item);

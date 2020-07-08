@@ -8,16 +8,20 @@ public class notes {
     private String date;
     private String time;
     private String subjectname;
+    private double userlat;
+    private double userlong;
 
 
 
-    public notes(String id, String title, String content, String date, String time, String subjectname) {
+    public notes(String id, String title, String content, String date, String time, String subjectname,double userlat,double userlong) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.date = date;
         this.time = time;
         this.subjectname = subjectname;
+        this.userlat = userlat;
+        this.userlong = userlong;
     }
 
     public notes() {
@@ -76,5 +80,21 @@ public class notes {
 
     public void setSubjectname(String subjectname) {
         this.subjectname = subjectname;
+    }
+
+    public double getUserlat() {
+        return userlat;
+    }
+
+    public void setUserlat(double userlat) {
+        this.userlat = userlat;
+    }
+
+    public double getUserlong() {
+        return userlong;
+    }
+
+    public void setUserlong(double userlong) {
+        this.userlong = userlong;
     }
 }
