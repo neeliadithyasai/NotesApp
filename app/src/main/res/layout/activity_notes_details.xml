@@ -13,14 +13,17 @@
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:layout_marginBottom="1dp"
-        android:background="#8D818C" />
+        android:background="#6D435A"
+        app:titleTextColor="#FFFCF9"/>
 
     <EditText
         android:id="@+id/notesDetails"
-        android:layout_width="404dp"
-        android:layout_height="683dp"
+        android:layout_width="match_parent"
+        android:layout_height="463dp"
         android:background="#E9EBF8"
         android:ems="10"
         android:gravity="start|top"
-        android:inputType="textMultiLine" />
+        android:inputType="textMultiLine"
+        android:textColor="#050505" />
+
 </LinearLayout>

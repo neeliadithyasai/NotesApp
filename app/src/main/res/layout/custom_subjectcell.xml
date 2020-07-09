@@ -21,17 +21,23 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="13dp"
-        android:background="#00EFE7DA"
+        android:background="#6D435A"
         android:padding="10dp"
-        app:srcCompat="@android:drawable/ic_menu_agenda" />
+        app:srcCompat="@drawable/ic_foldericon" />
 
     <TextView
         android:id="@+id/subjectTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_width="207dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="31dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
         android:layout_toRightOf="@+id/imgEmp"
         android:text="Title"
+        android:textColor="#FFFCF9"
         android:textSize="20sp"
         android:textStyle="bold" />
 

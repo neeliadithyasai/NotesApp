@@ -11,11 +11,12 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="#8D818C" />
+        android:background="#6D435A"
+        app:titleTextColor="#FFFCF9"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listOfNotes"
         android:layout_width="413dp"
         android:layout_height="640dp"
-      android:background="#0B3954" />
+      android:background="#FFFCF9" />
 </LinearLayout>

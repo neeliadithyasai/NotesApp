@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".mapsActivity"></activity>
+        <activity android:name=".subjectActivity"></activity>
+        <activity android:name=".mapsActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -30,7 +31,7 @@
                 android:value=".MainActivity" />
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".subjectActivity">
+        <activity android:name=".splashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
