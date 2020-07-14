@@ -54,12 +54,14 @@ public class notesDetailsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+
+
                     notesDetails.setText(dataSnapshot.child("content").getValue().toString());
                     selectednotelat = dataSnapshot.child("userlat").getValue().toString();
                     selectednotelon = dataSnapshot.child("userlong").getValue().toString();
                     getSupportActionBar().setTitle(dataSnapshot.child("title").getValue().toString());
 
-                    Log.d("showmedata",dataSnapshot.child("title").getValue().toString());
+                    Log.d("showmedata", dataSnapshot.child("title").getValue().toString());
 
 
 
@@ -100,17 +102,7 @@ public class notesDetailsActivity extends AppCompatActivity {
 
 
         }
-        if(item.getItemId() == R.id.delete_notes){
 
-            notesdata.removeValue();
-            Intent i = new Intent(this, MainActivity.class);
-            i.putExtra("subname",sname);
-            startActivity(i);
-
-
-
-
-        }
 
 
 

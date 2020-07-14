@@ -1,6 +1,7 @@
 package com.example.notesapp.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,11 +14,14 @@ import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.notesapp.R;
 import com.example.notesapp.model.notes;
 import com.example.notesapp.notesDetailsActivity;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +31,16 @@ public class adapterNotes extends RecyclerView.Adapter< adapterNotes.ViewHolder>
     LayoutInflater inflater;
     List<notes> noteslist =new ArrayList<>();
     List<notes> noteslistfull =new ArrayList<>();
+    Context dcontext;
 
 
 
-    public adapterNotes(Context context, List<notes> noteslist){
+    public adapterNotes(Context context, List<notes> noteslist,    Context dcontext){
         this.inflater = LayoutInflater.from(context);
         this.noteslist = noteslist;
         noteslistfull = new ArrayList<notes>(noteslist);
+        this.dcontext = dcontext;
+
 
     }
 
@@ -45,13 +52,56 @@ public class adapterNotes extends RecyclerView.Adapter< adapterNotes.ViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(@NonNull adapterNotes.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull adapterNotes.ViewHolder holder, final int position) {
         String title = noteslist.get(position).getTitle();
         String date = noteslist.get(position).getDate();
         String time = noteslist.get(position).getTime();
         holder.date.setText(date);
         holder.time.setText(time);
         holder.title.setText(title);
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                final DatabaseReference notesdata = FirebaseDatabase.getInstance().getReference().child("Notes").child(noteslist.get(position).getSubjectname()).child("subjectnotes").child(String.valueOf(noteslist.get(position).getId()));
+
+
+
+                Log.d("position", String.valueOf(noteslist.get(position).getId()));
+
+
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(dcontext);
+                builder.setTitle("Are you sure to delete?");
+
+
+
+                // Set up the buttons
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+
+                        noteslist.remove(noteslist.get(position));
+                        notesdata.removeValue();
+
+                        notifyDataSetChanged();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
+                return false;
+            }
+        });
+
 
 
 

@@ -76,7 +76,7 @@ public class subjectActivity extends AppCompatActivity {
 
                 }
 
-                allDataAdapter = new adapterSubject(subjectActivity.this, sublist);
+                allDataAdapter = new adapterSubject(subjectActivity.this, sublist,subjectActivity.this);
                 subrecyclerView.setAdapter(allDataAdapter);
                 allDataAdapter.notifyDataSetChanged();
 

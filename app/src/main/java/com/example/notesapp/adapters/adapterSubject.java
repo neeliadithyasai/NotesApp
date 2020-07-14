@@ -1,22 +1,28 @@
 package com.example.notesapp.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.notesapp.MainActivity;
 import com.example.notesapp.R;
 import com.example.notesapp.model.subject;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +33,12 @@ public class adapterSubject extends RecyclerView.Adapter< adapterSubject.ViewHol
     List<subject> subjectlist =new ArrayList<>();
     List<subject> subjectlistFull =new ArrayList<>();
 
-    public adapterSubject(Context context, List<subject> subjectlist){
+    Context dcontext;
+    public adapterSubject(Context context, List<subject> subjectlist,Context dcontext){
         this.inflater = LayoutInflater.from(context);
         this.subjectlist = subjectlist;
         subjectlistFull = new ArrayList<subject>(subjectlist);
+        this.dcontext = dcontext;
 
     }
     @NonNull
@@ -41,9 +49,55 @@ public class adapterSubject extends RecyclerView.Adapter< adapterSubject.ViewHol
     }
 
     @Override
-    public void onBindViewHolder(@NonNull adapterSubject.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final adapterSubject.ViewHolder holder, final int position) {
         String title = subjectlist.get(position).getSubjectID();
         holder.subtitle.setText(title);
+
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                final DatabaseReference notesdata = FirebaseDatabase.getInstance().getReference().child("Notes").child(String.valueOf(subjectlist.get(position).getSubjectID()));
+
+
+
+                Log.d("position", String.valueOf(subjectlist.get(position).getSubjectID()));
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(dcontext);
+                builder.setTitle("Are you sure to delete?");
+
+
+
+                // Set up the buttons
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+
+                         subjectlist.remove(subjectlist.get(position));
+                        notesdata.removeValue();
+
+                        notifyDataSetChanged();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
+
+
+
+                return false;
+
+            }
+        });
+
 
 
     }
@@ -84,7 +138,7 @@ public class adapterSubject extends RecyclerView.Adapter< adapterSubject.ViewHol
         protected void publishResults(CharSequence constraint, FilterResults results) {
 
             subjectlist.clear();
-            Log.d("searchresults", String.valueOf(results.values));
+
 
             subjectlist.addAll((List) results.values);
             notifyDataSetChanged();
@@ -97,7 +151,7 @@ public class adapterSubject extends RecyclerView.Adapter< adapterSubject.ViewHol
         TextView subtitle;
 
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull final View itemView) {
             super(itemView);
             subtitle = itemView.findViewById(R.id.subjectTitle);
 
@@ -113,6 +167,8 @@ public class adapterSubject extends RecyclerView.Adapter< adapterSubject.ViewHol
 
                 }
             });
+
+
         }
     }
 }

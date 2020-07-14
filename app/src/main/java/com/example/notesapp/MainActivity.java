@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         Intent i = getIntent();
       id = i.getExtras().getString("subname");
         notesdata = FirebaseDatabase.getInstance().getReference().child("Notes").child(id).child("subjectnotes");
+        getSupportActionBar().setTitle(id);
 
 
 
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 //                Log.d("showmedata",String.valueOf(dataSnapshot.getValue(notes.class)));
 
 
-                allDataAdapter = new adapterNotes(MainActivity.this, notesList);
+                allDataAdapter = new adapterNotes(MainActivity.this, notesList,MainActivity.this);
                 recyclerView.setAdapter(allDataAdapter);
                 allDataAdapter.notifyDataSetChanged();
 

@@ -12,9 +12,4 @@
         android:icon="@drawable/ic_mapicon"
         android:title="Item"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/delete_notes"
-        android:icon="@drawable/ic_deleteicon"
-        android:title="delete"
-        app:showAsAction="ifRoom" />
 </menu>

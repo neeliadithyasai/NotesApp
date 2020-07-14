@@ -39,7 +39,8 @@
         android:text="Title"
         android:textColor="#FFFCF9"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:gravity="center"/>
 
 
 </RelativeLayout>
