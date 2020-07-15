@@ -71,6 +71,7 @@ public class subjectActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 sublist.clear();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+
                     Log.d("subjectlog", String.valueOf(dataSnapshot1.getValue(subject.class)));
                     subject subj = dataSnapshot1.getValue(subject.class);
                     sublist.add(subj);

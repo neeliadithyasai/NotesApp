@@ -3,10 +3,14 @@ package com.example.notesapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,8 +27,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.dynamic.IObjectWrapper;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,6 +44,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class notesDetailsActivity extends AppCompatActivity {
 
@@ -46,6 +55,12 @@ public class notesDetailsActivity extends AppCompatActivity {
     String selectednotelon;
     String id;
     String sname;
+
+
+    //initialization for location.
+    FusedLocationProviderClient client;
+    HashMap<String,Double> getlatlong;
+    LatLng coli;
 
     //firebasestorage
     FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -69,6 +84,14 @@ public class notesDetailsActivity extends AppCompatActivity {
         final ImageView nm = (ImageView)findViewById(R.id.noteimage);
 
         final ImageView play = (ImageView) findViewById(R.id.playAudio);
+        client = LocationServices.getFusedLocationProviderClient(this);
+        if (ActivityCompat.checkSelfPermission(notesDetailsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+            getcurrentLoaction();
+
+        } else {
+            ActivityCompat.requestPermissions(notesDetailsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+        }
 
 
 
@@ -90,6 +113,7 @@ public class notesDetailsActivity extends AppCompatActivity {
                     notesDetails.setText(dataSnapshot.child("content").getValue().toString());
                     selectednotelat = dataSnapshot.child("userlat").getValue().toString();
                     selectednotelon = dataSnapshot.child("userlong").getValue().toString();
+
                     if(dataSnapshot.child("filename").getValue() != null) {
                         audioname = dataSnapshot.child("filename").getValue().toString();
                     }else
@@ -98,7 +122,11 @@ public class notesDetailsActivity extends AppCompatActivity {
                     }
                     getSupportActionBar().setTitle(dataSnapshot.child("title").getValue().toString());
 
-                    Log.d("showmedata", dataSnapshot.child("title").getValue().toString());
+
+
+//                 getlatlong = (HashMap<String, Double>) dataSnapshot.child("mulmaps").getValue();
+            //    Log.d("mapdet", String.valueOf(getlatlong.get("latitude")));
+
 
                 if (dataSnapshot.child("imagename").getValue() != null) {
                     try {
@@ -157,6 +185,8 @@ public class notesDetailsActivity extends AppCompatActivity {
         });
 
 
+
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -173,12 +203,17 @@ public class notesDetailsActivity extends AppCompatActivity {
             Intent i = new Intent(this, mapsActivity.class);
            i.putExtra("notelat",selectednotelat);
             i.putExtra("notelon",selectednotelon);
+            i.putExtra("id",id);
+            i.putExtra("sname",sname);
+           // i.putExtra("hashmap",getlatlong);
             startActivity(i);
 
         }
         if(item.getItemId() == R.id.save_editednotes){
 
             notesdata.child("content").setValue(notesDetails.getText().toString());
+            notesdata.child("mulmaps").setValue(coli);
+
             onBackPressed();
 
 
@@ -219,5 +254,40 @@ public class notesDetailsActivity extends AppCompatActivity {
     private void stopPlaying() {
         player.release();
         player = null;
+    }
+
+    private void getcurrentLoaction() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        Task<Location> Task = client.getLastLocation();
+        Task.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(final Location location) {
+                if(location != null){
+
+
+
+
+                    coli = new LatLng(location.getLatitude(),location.getLongitude());
+
+
+                    Log.d("userlocation", String.valueOf(location.getLatitude()));
+
+
+
+
+
+                }
+            }
+        });
+
     }
 }

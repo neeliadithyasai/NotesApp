@@ -34,6 +34,7 @@ import android.widget.Toast;
 import com.example.notesapp.model.notes;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -68,6 +69,7 @@ public class addNoteActivity extends AppCompatActivity {
     String id;
     double noteslat;
     double noteslong;
+    LatLng coli;
 
 
    //varibles for image and audio
@@ -228,6 +230,9 @@ public class addNoteActivity extends AppCompatActivity {
                     noteslat = location.getLatitude();
                     noteslong = location.getLongitude();
 
+                    coli = new LatLng(location.getLatitude(),location.getLongitude());
+
+
                     Log.d("userlocation", String.valueOf(location.getLatitude()));
 
 
@@ -354,6 +359,8 @@ public class addNoteActivity extends AppCompatActivity {
                notesdata.child(String.valueOf(maxId + 1)).child("imagename").setValue("noimage");
            }
                 notesdata.child(String.valueOf(maxId+1)).child("filename").setValue(String.valueOf(fileName));
+            notesdata.child(String.valueOf(maxId+1)).child("mulmaps").setValue("0");
+
 
             Toast.makeText(this,"save button is clicked",Toast.LENGTH_LONG).show();
             onBackPressed();
@@ -411,7 +418,7 @@ public class addNoteActivity extends AppCompatActivity {
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         // Get a URL to the uploaded content
 
-                        Toast.makeText(addNoteActivity.this,"imageupload successfull",Toast.LENGTH_LONG).show();
+                        Toast.makeText(addNoteActivity.this,"audio upload successfull",Toast.LENGTH_LONG).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

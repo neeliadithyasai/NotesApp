@@ -1,5 +1,9 @@
 package com.example.notesapp.model;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import java.util.ArrayList;
+
 public class notes {
 
     private String id;
@@ -10,6 +14,7 @@ public class notes {
     private String subjectname;
     private double userlat;
     private double userlong;
+    private ArrayList<notes> colist = new ArrayList<notes>();
 
     public String getImagename() {
         return imagename;
@@ -110,5 +115,13 @@ public class notes {
 
     public void setUserlong(double userlong) {
         this.userlong = userlong;
+    }
+
+    public ArrayList<notes> getColist() {
+        return colist;
+    }
+
+    public void setColist(ArrayList<notes> colist) {
+        this.colist = colist;
     }
 }
