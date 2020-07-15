@@ -11,6 +11,16 @@ public class notes {
     private double userlat;
     private double userlong;
 
+    public String getImagename() {
+        return imagename;
+    }
+
+    public void setImagename(String imagename) {
+        this.imagename = imagename;
+    }
+
+    private String imagename;
+
 
 
     public notes(String id, String title, String content, String date, String time, String subjectname,double userlat,double userlong) {
@@ -32,6 +42,10 @@ public class notes {
         this.content = content;
         this.date = date;
         this.time = time;
+    }
+
+    public notes(String imagename) {
+        this.imagename = imagename;
     }
 
     public String getId() {

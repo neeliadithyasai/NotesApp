@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -52,7 +53,7 @@ public class subjectActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         subrecyclerView=findViewById(R.id.subjectRecyclerView);
-        subrecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        subrecyclerView.setLayoutManager(new GridLayoutManager(this,2));
         subdata = FirebaseDatabase.getInstance().getReference().child("Notes");
 
 //        notes scn = new notes("1","rocketscience","new theory","7/7/20","6:30","science");
